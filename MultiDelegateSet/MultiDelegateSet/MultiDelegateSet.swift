@@ -1,12 +1,13 @@
-# MultiDelegateSet
+//
+//  MultiDelegateSet.swift
+//  MultiDelegateSet
+//
+//  Created by HongXiangWen on 2020/6/30.
+//  Copyright © 2020 WHX. All rights reserved.
+//
 
-### 核心思想
+import Foundation
 
-通过`NSHashTable`来管理代理集合，通过设置`options`为`.weakMemory`来保证代理在销毁时自动移除集合中的对象。
-
-### 具体实现
-
-```
 struct MultiDelegateSet<T: AnyObject> {
     
     /// 代理集合
@@ -37,26 +38,3 @@ struct MultiDelegateSet<T: AnyObject> {
         return delegates.allObjects
     }
 }
-```
-
-### 使用方法
-
-`TestObject`类：
-```
-@objc protocol TestObjectDelegate: class {
-    func testCallback()
-}
-
-class TestObject {
-    
-    private(set) var delegateSet = MultiDelegateSet<TestObjectDelegate>()
-    
-    func callback() {
-        delegateSet.allDelegates().forEach { $0.testCallback() }
-    }
-}
-```
-添加代理：
-```
-testObject.delegateSet.addDelegate(self)
-```
